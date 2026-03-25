@@ -37,7 +37,7 @@ public sealed class ZadaniaLinq
     public IEnumerable<string> Zadanie02_AdresyEmailStudentow()
     {
         var method = DaneUczelni.Studenci
-            .Select(s => $"{s.NumerIndeksu}, {s.Email}");
+            .Select(s => $"{s.Email}");
         
         return method;
         
@@ -56,6 +56,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie03_StudenciPosortowani()
     {
+        
         throw Niezaimplementowano(nameof(Zadanie03_StudenciPosortowani));
     }
 
