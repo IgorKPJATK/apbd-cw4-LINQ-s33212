@@ -77,6 +77,11 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie04_PierwszyPrzedmiotAnalityczny()
     {
+        var method = DaneUczelni.Przedmioty
+            .Where(s => s.Kategoria.Equals("Analytics"))
+            .FirstOrDefault(s => $"{s.Nazwa}, {s.DataStartu}","nie ma takiego przedmiotu");
+        return method;
+        
         throw Niezaimplementowano(nameof(Zadanie04_PierwszyPrzedmiotAnalityczny));
     }
 
