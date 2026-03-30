@@ -188,7 +188,7 @@ public sealed class ZadaniaLinq
     {
         var method = DaneUczelni.Zapisy
             .OrderByDescending(s => s.DataZapisu)
-            .Select(s => $"{s.DataZapisu}, {s.StudentId}, {s.PrzedmiotId}")
+            .Select(s => $"{s.DataZapisu},Student Id = {s.StudentId},Przedmiot Id = {s.PrzedmiotId}")
             .Take(3);
         
         return method;
@@ -236,7 +236,7 @@ public sealed class ZadaniaLinq
             .Join(DaneUczelni.Zapisy
                 , student => student.Id
                 , zapis => zapis.StudentId
-                , (student, zapis) => $"{student.Imie}, {student.Nazwisko}, {zapis.DataZapisu}");
+                , (student, zapis) => $"{student.Imie} {student.Nazwisko}, {zapis.DataZapisu}");
         
         return method;
         //throw Niezaimplementowano(nameof(Zadanie11_PolaczStudentowIZapisy));
@@ -255,6 +255,23 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie12_ParyStudentPrzedmiot()
     {
+
+
+        var method = DaneUczelni.Zapisy
+            .Join(DaneUczelni.Studenci,
+                zapis => zapis.StudentId,
+                student => student.Id,
+                (zapis, student) => new
+                {
+                    zapis, student
+                })
+            .Join(DaneUczelni.Przedmioty,
+                kontener => kontener.zapis.PrzedmiotId,
+                przedmiot => przedmiot.Id,
+                (kontener, przedmiot) =>
+                    $"{kontener.student.Imie} {kontener.student.Nazwisko}, {przedmiot.Nazwa}");
+        
+        return method;
         throw Niezaimplementowano(nameof(Zadanie12_ParyStudentPrzedmiot));
     }
 
