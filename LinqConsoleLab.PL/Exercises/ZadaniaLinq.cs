@@ -232,7 +232,14 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie11_PolaczStudentowIZapisy()
     {
-        throw Niezaimplementowano(nameof(Zadanie11_PolaczStudentowIZapisy));
+        var method = DaneUczelni.Studenci
+            .Join(DaneUczelni.Zapisy
+                , student => student.Id
+                , zapis => zapis.StudentId
+                , (student, zapis) => $"{student.Imie}, {student.Nazwisko}, {zapis.DataZapisu}");
+        
+        return method;
+        //throw Niezaimplementowano(nameof(Zadanie11_PolaczStudentowIZapisy));
     }
 
     /// <summary>
