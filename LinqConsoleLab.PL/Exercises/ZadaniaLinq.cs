@@ -255,8 +255,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie12_ParyStudentPrzedmiot()
     {
-
-
+        
         var method = DaneUczelni.Zapisy
             .Join(DaneUczelni.Studenci,
                 zapis => zapis.StudentId,
@@ -287,7 +286,21 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie13_GrupowanieZapisowWedlugPrzedmiotu()
     {
-        throw Niezaimplementowano(nameof(Zadanie13_GrupowanieZapisowWedlugPrzedmiotu));
+        var method = DaneUczelni.Zapisy
+            .Join(DaneUczelni.Przedmioty,
+                zapis => zapis.PrzedmiotId,
+                przedmiot => przedmiot.Id,
+                (zapis, przedmiot) => new
+                {
+                    przedmiot.Nazwa
+                })
+            .GroupBy(s => s.Nazwa)
+            .Select(s => $"{s.Key}, {s.Count()}");
+        
+        return method;
+
+
+        //throw Niezaimplementowano(nameof(Zadanie13_GrupowanieZapisowWedlugPrzedmiotu));
     }
 
     /// <summary>
