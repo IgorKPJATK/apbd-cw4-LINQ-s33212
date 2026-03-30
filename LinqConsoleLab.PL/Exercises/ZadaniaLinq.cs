@@ -79,10 +79,12 @@ public sealed class ZadaniaLinq
     {
         var method = DaneUczelni.Przedmioty
             .Where(s => s.Kategoria.Equals("Analytics"))
-            .FirstOrDefault(s => $"{s.Nazwa}, {s.DataStartu}","nie ma takiego przedmiotu");
-        return method;
+            .Select(s => $"{s.Nazwa}, {s.DataStartu}")
+            .FirstOrDefault() ?? "nie ma takiego przedmiotu";
+
+         yield return method;
         
-        throw Niezaimplementowano(nameof(Zadanie04_PierwszyPrzedmiotAnalityczny));
+        //throw Niezaimplementowano(nameof(Zadanie04_PierwszyPrzedmiotAnalityczny));
     }
 
     /// <summary>
