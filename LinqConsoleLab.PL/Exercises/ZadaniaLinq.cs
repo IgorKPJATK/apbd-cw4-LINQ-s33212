@@ -347,7 +347,19 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie15_ProwadzacyILiczbaPrzedmiotow()
     {
-        throw Niezaimplementowano(nameof(Zadanie15_ProwadzacyILiczbaPrzedmiotow));
+        var method = DaneUczelni.Prowadzacy
+            .GroupJoin(DaneUczelni.Przedmioty,
+                prowadzacy => prowadzacy.Id,
+                przedmioty => przedmioty.ProwadzacyId,
+                (prowadzacy, przedmioty) => new
+                {
+                    prowadzacy.Imie, prowadzacy.Nazwisko, przedmioty
+                })
+            .Select(s => $"{s.Imie} {s.Nazwisko}, {s.przedmioty.Count()}");
+        
+        return method;
+
+        //throw Niezaimplementowano(nameof(Zadanie15_ProwadzacyILiczbaPrzedmiotow));
     }
 
     /// <summary>
