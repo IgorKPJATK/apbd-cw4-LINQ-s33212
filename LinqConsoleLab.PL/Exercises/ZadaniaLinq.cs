@@ -376,7 +376,21 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie16_NajwyzszaOcenaKazdegoStudenta()
     {
-        throw Niezaimplementowano(nameof(Zadanie16_NajwyzszaOcenaKazdegoStudenta));
+        var method = DaneUczelni.Studenci
+            .Join(DaneUczelni.Zapisy,
+                student => student.Id,
+                zapis => zapis.StudentId,
+                (student, zapis) => new
+                {
+                    student.Imie, student.Nazwisko, zapis.OcenaKoncowa
+                })
+            .Where(s => s.OcenaKoncowa != null)
+            .GroupBy(s => new { s.Imie, s.Nazwisko })
+            .Select(s => $"{s.Key.Imie} {s.Key.Nazwisko}, {s.Max(s => s.OcenaKoncowa)}");
+            
+        return method;
+
+        //throw Niezaimplementowano(nameof(Zadanie16_NajwyzszaOcenaKazdegoStudenta));
     }
 
     /// <summary>
