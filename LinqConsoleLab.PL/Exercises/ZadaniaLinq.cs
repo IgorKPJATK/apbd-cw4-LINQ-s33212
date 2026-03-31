@@ -22,7 +22,7 @@ public sealed class ZadaniaLinq
         
         return method;
         
-        throw Niezaimplementowano(nameof(Zadanie01_StudenciZWarszawy));
+        //throw Niezaimplementowano(nameof(Zadanie01_StudenciZWarszawy));
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public sealed class ZadaniaLinq
         
         return method;
         
-        throw Niezaimplementowano(nameof(Zadanie02_AdresyEmailStudentow));
+        //throw Niezaimplementowano(nameof(Zadanie02_AdresyEmailStudentow));
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public sealed class ZadaniaLinq
             .Select(s => $"{s.NumerIndeksu}, {s.Imie}, {s.Nazwisko}");
         return method;
         
-        throw Niezaimplementowano(nameof(Zadanie03_StudenciPosortowani));
+        //throw Niezaimplementowano(nameof(Zadanie03_StudenciPosortowani));
     }
 
     /// <summary>
@@ -271,7 +271,7 @@ public sealed class ZadaniaLinq
                     $"{kontener.student.Imie} {kontener.student.Nazwisko}, {przedmiot.Nazwa}");
         
         return method;
-        throw Niezaimplementowano(nameof(Zadanie12_ParyStudentPrzedmiot));
+        //throw Niezaimplementowano(nameof(Zadanie12_ParyStudentPrzedmiot));
     }
 
     /// <summary>
@@ -317,7 +317,21 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie14_SredniaOcenaNaPrzedmiot()
     {
-        throw Niezaimplementowano(nameof(Zadanie14_SredniaOcenaNaPrzedmiot));
+        var method = DaneUczelni.Zapisy
+            .Join(DaneUczelni.Przedmioty,
+                zapis => zapis.PrzedmiotId,
+                przedmiot => przedmiot.Id,
+                (zapis, przedmiot) => new
+                {
+                    przedmiot.Nazwa, zapis.OcenaKoncowa 
+                })
+            .Where(s => s.OcenaKoncowa != null)
+            .GroupBy(s => s.Nazwa)
+            .Select(s => $"{s.Key}, {s.Average(z => z.OcenaKoncowa )}");
+            
+        return method;
+        
+        //throw Niezaimplementowano(nameof(Zadanie14_SredniaOcenaNaPrzedmiot));
     }
 
     /// <summary>
